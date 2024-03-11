@@ -32,10 +32,7 @@ router.post("/transfer", authMiddleware, async (req, res) => {
     const session = await mongoose.startSession();
     session.startTransaction();
     
-    
     const { amount, to } = req.body;
-
-   
     const account = await Account.findOne({ user: req.userId }).session(session);
 
     if (!account ) {

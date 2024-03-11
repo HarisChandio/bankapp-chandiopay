@@ -7,7 +7,7 @@ This repository contains the source code for an Express API server built using N
 1. Clone the repository:
 
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/HarisChandio/payment-server/blob/main/backend
    npm install
 # Backend Routes Documentation
 
