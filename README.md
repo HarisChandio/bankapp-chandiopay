@@ -1,2 +1,2 @@
 
-## Build a basic version of PayTM
+## Build a basic version of Banking System to perform ACID transactions

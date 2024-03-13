@@ -12,5 +12,5 @@ app.use("/api/v1", rootRouter);
 
 app.listen(3001, async () => {
   await connect();
-  console.log("listening on 3000");
+  console.log("listening on 3001");
 });

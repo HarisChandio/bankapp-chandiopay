@@ -1,5 +1,5 @@
-const express = require("express")
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 const z = require("zod");
 const { User, Account } = require("../db/model");
 const jwt = require("jsonwebtoken");
@@ -108,8 +108,8 @@ const updateBody = z.object({
 router.put("/user", authMiddleware, async (req, res) => {
   const { success } = updateBody.safeParse(req.body);
   if (!success) return res.status(411).json({ message: "Wrong Input" });
-  console.log(req.userId)
-  await User.findByIdAndUpdate(req.userId,req.body)
+  console.log(req.userId);
+  await User.findByIdAndUpdate(req.userId, req.body);
   res.json({
     message: "Updated successfully",
   });
@@ -118,20 +118,40 @@ router.put("/user", authMiddleware, async (req, res) => {
 router.get("/bulk", async (req, res) => {
   const filter = req.query.filter || "";
 
+  console.log(filter);
   const users = await User.find({
     $or: [
       {
         firstName: {
           $regex: filter,
+          $options: "i",
+        },
+      },
+      {
+        lastName: {
+          $regex: filter,
+          $options: "i",
+        },
+      },
+    ],
+  });
+  console.log("MongoDB Query:", {
+    $or: [
+      {
+        firstName: {
+          $regex: filter,
+          $options: "i",
         },
         lastName: {
           $regex: filter,
+          $options: "i",
         },
       },
     ],
   });
 
-  res.json({
+  console.log(users);
+  res.status(200).json({
     user: users.map((user) => ({
       username: user.username,
       lastName: user.lastName,
