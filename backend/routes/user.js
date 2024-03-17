@@ -15,7 +15,9 @@ const signupBody = z.object({
 });
 
 router.post("/signup", async (req, res) => {
+
   try {
+    console.log("sign up hit")
     const { success } = signupBody.safeParse(req.body);
     if (!success) {
       return res.status(411).json({
@@ -65,6 +67,7 @@ const signinBody = z.object({
 
 router.post("/signin", async (req, res) => {
   try {
+    console.log("sign in ")
     const { success } = signinBody.safeParse(req.body);
     if (!success) {
       return res.status(411).json({
@@ -115,7 +118,24 @@ router.put("/user", authMiddleware, async (req, res) => {
   });
 });
 
+router.get("/info", authMiddleware, async(req,res)=>{
+  try {
+    const user = await User.findById(req.userId);
+    const balance = await Account.findOne({user: req.userId})
+    res.status(200).json({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      balance: balance,
+      id: req.userId
+    })
+  } catch (error) {
+      console.log(error);
+      
+  }
+})
+
 router.get("/bulk", async (req, res) => {
+  console.log("bulk")
   const filter = req.query.filter || "";
 
   console.log(filter);
