@@ -1,22 +1,26 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {Signin} from "./pages/SignIn";
-import {Signup} from "./pages/SignUp";
-import {Dashboard }from "./pages/Dashboard";
-import {SendMoney }from "./pages/SendMoney";
-function App() {
+  import Dashboard from "./pages/Dashboard";
+  import EditProfile from "./pages/EditProfile";
+  import Home from "./pages/Home";
+  import Profile from "./pages/Profile";
+  import SendMoney from "./pages/SendMoney";
+  import Signin from "./pages/Signin";
+  import Signup from "./pages/Signup";
+  import { Routes, Route } from "react-router-dom";
 
-  return (
-    <>
-      <BrowserRouter>
+  function App() {
+    return (
+      <div>
         <Routes>
-          <Route path="/signup" element={<Signup />}></Route>
-          <Route path="/signin" element={<Signin />}></Route>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/send" element={<SendMoney />}></Route>
+          <Route path="/" element={<Home />} />
+          <Route path={"/signup"} element={<Signup />} />
+          <Route path={"/signin"} element={<Signin />} />
+          <Route path={"/dashboard"} element={<Dashboard />} />
+          <Route path={"/send"} element={<SendMoney />} />
+          <Route path={"/profile"} element={<Profile />} />
+          <Route path={"/edit"} element={<EditProfile />} />
         </Routes>
-      </BrowserRouter>
-    </>
-  )
-}
+      </div>
+    );
+  }
 
-export default App
+  export default App;

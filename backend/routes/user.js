@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const authMiddleware = require("../middleware");
 const { route } = require("./user");
-
+const jwtKey = "paytmbruh"
 const signupBody = z.object({
   username: z.string(),
   firstName: z.string(),
@@ -46,7 +46,7 @@ router.post("/signup", async (req, res) => {
       balance: 1 + Math.random() * 10000,
     });
 
-    const token = jwt.sign({ userId }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId }, jwtKey);
 
     return res.status(200).json({
       message: "User created Successfully",
@@ -88,7 +88,7 @@ router.post("/signin", async (req, res) => {
     if (user.password != req.body.password)
       return res.status(401).json({ message: "Password not correct" });
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: user._id }, jwtKey);
 
     res.status(200).json({
       message: "logged In",

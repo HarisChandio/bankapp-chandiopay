@@ -1,10 +1,14 @@
-export function InputBox({label, placeholder, onChange}){
-    return(
-        <div>
-            <div className="text-sm font-medium text-left py-2">
-                {label}
-            </div>
-            <input onChange={onChange} type="text" placeholder={placeholder} className="w-full px-2 py-1 border rounded border-slate-200 " />
-        </div>
-    )
+import React from 'react'
+
+const InputBox = ({label, placeholder , onChange, type}) => {
+  return (
+    <div>
+      <div className="text-sm font-medium text-left py-2">
+        {label}
+      </div>
+      <input placeholder={placeholder} onChange={onChange} type={type || "text"}  className="w-full px-2 py-1 rounded-md focus:outline-none border border-black" />
+    </div>
+  )
 }
+
+export default InputBox
