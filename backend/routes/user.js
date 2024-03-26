@@ -15,9 +15,8 @@ const signupBody = z.object({
 });
 
 router.post("/signup", async (req, res) => {
-
   try {
-    console.log("sign up hit")
+    console.log("sign up hit");
     const { success } = signupBody.safeParse(req.body);
     if (!success) {
       return res.status(411).json({
@@ -67,7 +66,7 @@ const signinBody = z.object({
 
 router.post("/signin", async (req, res) => {
   try {
-    console.log("sign in ")
+    console.log("sign in ");
     const { success } = signinBody.safeParse(req.body);
     if (!success) {
       return res.status(411).json({
@@ -118,24 +117,37 @@ router.put("/user", authMiddleware, async (req, res) => {
   });
 });
 
-router.get("/info", authMiddleware, async(req,res)=>{
+router.delete("/delete", authMiddleware, async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.userId);
+    res.status(200).json({
+      message: "Account deleted",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      msg: "Server error",
+    });
+  }
+});
+router.get("/info", authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
-    const balance = await Account.findOne({user: req.userId})
+    const account = await Account.findOne({ user: req.userId });
     res.status(200).json({
       firstName: user.firstName,
       lastName: user.lastName,
-      balance: balance,
-      id: req.userId
-    })
+      balance: account.balance,
+      id: req.userId,
+      username: user.username,
+    });
   } catch (error) {
-      console.log(error);
-      
+    console.log(error);
   }
-})
+});
 
 router.get("/bulk", async (req, res) => {
-  console.log("bulk")
+  console.log("bulk");
   const filter = req.query.filter || "";
 
   console.log(filter);
